@@ -2,14 +2,13 @@
 %global pypi_name mps-youtube
 
 Name:           %{pypi_name}
-Version:        0.2.7.1
+Version:        0.2.8
 Release:        1%{?dist}
 Summary:        Terminal based YouTube player and downloader
 
 License:        GPLv3
 URL:            http://github.com/np1/mps-youtube
 
-#Source0:        https://pypi.python.org/packages/61/24/731d187970c531023655df748a63b09dc44a6102ce5997ef52e6285acb1d/mps-youtube-0.2.7.1.tar.gz
 Source0:        https://github.com/mps-youtube/mps-youtube/archive/v%{version}/%{name}-%{version}.tar.gz
 
 
@@ -17,7 +16,7 @@ BuildArch:      noarch
  
 BuildRequires:  python3-devel
  
-Requires:       mpv python3-pafy >= 0.3.74
+Requires:       mpv python3-pafy >= 0.5.4
 
 %description
 This project is based on mps, a terminal based program to search, stream and download music.
@@ -49,6 +48,13 @@ rm -f $RPM_BUILD_ROOT/usr/{README.rst,CHANGELOG,LICENSE}
 %{python3_sitelib}/mps_youtube/
 
 %changelog
+* Sat Feb 24 2018  Jerzy Drozdz <rpmbuilder@jdsieci.pl> - 0.2.8-1
+- update to version 0.2.8
+- Removed youtube-dl dependency, python3-pafy requires youtube-dl
+
+* Thu Jan 25 2018  Jerzy Drozdz <rpmbuilder@jdsieci.pl> - 0.2.7.1-2
+- Fixed missing youtube-dl dependency
+
 * Fri Feb 17 2017  Jerzy Drozdz <rpmbuilder@jdsieci.pl> - 0.2.7.1-1
 - update to version 0.2.7.1
 

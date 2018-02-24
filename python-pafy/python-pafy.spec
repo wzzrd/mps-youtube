@@ -1,8 +1,8 @@
-# Created by pyp2rpm-3.1.2
+# Created by pyp2rpm-3.2.1
 %global pypi_name pafy
 
 Name:           python-%{pypi_name}
-Version:        0.5.1
+Version:        0.5.4
 Release:        1%{?dist}
 Summary:        Retrieve YouTube content and metadata
 
@@ -11,43 +11,49 @@ URL:            http://np1.github.io/pafy/
 Source0:        https://files.pythonhosted.org/packages/source/p/%{pypi_name}/%{pypi_name}-%{version}.tar.gz
 BuildArch:      noarch
  
-BuildRequires:  python3-setuptools
 BuildRequires:  python3-devel
+BuildRequires:  python3-setuptools
  
-BuildRequires:  python-setuptools
 BuildRequires:  python2-devel
+BuildRequires:  python2-setuptools
+
+BuildRequires:	youtube-dl
+
 
 %description
-.. image:: https://img.shields.io/pypi/v/Pafy.svg     :target:
-https://pypi.python.org/pypi/pafy .. image::
-https://img.shields.io/pypi/dm/Pafy.svg     :target:
-https://pypi.python.org/pypi/pafy .. image::
-https://img.shields.io/coveralls/np1/pafy/develop.svg     :target:
-https://coveralls.io/r/np1/pafy?branchdevelop .. ...
+ Retreive metadata such as viewcount, duration, rating, author, thumbnail,
+keywords Download video or audio at requested resolution / bitrate / format /
+filesize Command line tool (ytdl) for downloading directly from the command
+line Retrieve the URL to stream the video in a player such as vlc or mplayer
+Works with agerestricted videos and nonembeddable videos Small, standalone,
+single ...
 
 %package -n     python3-%{pypi_name}
 Summary:        Retrieve YouTube content and metadata
+Requires:	youtube-dl
+
 %{?python_provide:%python_provide python3-%{pypi_name}}
 
 %description -n python3-%{pypi_name}
-.. image:: https://img.shields.io/pypi/v/Pafy.svg     :target:
-https://pypi.python.org/pypi/pafy .. image::
-https://img.shields.io/pypi/dm/Pafy.svg     :target:
-https://pypi.python.org/pypi/pafy .. image::
-https://img.shields.io/coveralls/np1/pafy/develop.svg     :target:
-https://coveralls.io/r/np1/pafy?branchdevelop .. ...
+ Retreive metadata such as viewcount, duration, rating, author, thumbnail,
+keywords Download video or audio at requested resolution / bitrate / format /
+filesize Command line tool (ytdl) for downloading directly from the command
+line Retrieve the URL to stream the video in a player such as vlc or mplayer
+Works with agerestricted videos and nonembeddable videos Small, standalone,
+single ...
+
 
 %package -n     python2-%{pypi_name}
 Summary:        Retrieve YouTube content and metadata
 %{?python_provide:%python_provide python2-%{pypi_name}}
 
 %description -n python2-%{pypi_name}
-.. image:: https://img.shields.io/pypi/v/Pafy.svg     :target:
-https://pypi.python.org/pypi/pafy .. image::
-https://img.shields.io/pypi/dm/Pafy.svg     :target:
-https://pypi.python.org/pypi/pafy .. image::
-https://img.shields.io/coveralls/np1/pafy/develop.svg     :target:
-https://coveralls.io/r/np1/pafy?branchdevelop .. ...
+ Retreive metadata such as viewcount, duration, rating, author, thumbnail,
+keywords Download video or audio at requested resolution / bitrate / format /
+filesize Command line tool (ytdl) for downloading directly from the command
+line Retrieve the URL to stream the video in a player such as vlc or mplayer
+Works with agerestricted videos and nonembeddable videos Small, standalone,
+single ...
 
 
 %prep
@@ -57,21 +63,21 @@ rm -rf %{pypi_name}.egg-info
 
 %build
 %py3_build
-%py2_build
+PAFY_BACKEND=internal %py2_build
 
 %install
 # Must do the subpackages' install first because the scripts in /usr/bin are
 # overwritten with every setup.py install.
-%py2_install
-cp %{buildroot}/%{_bindir}/ytdl %{buildroot}/%{_bindir}/ytdl-2
-ln -sf %{_bindir}/ytdl-2 %{buildroot}/%{_bindir}/ytdl-%{python2_version}
-
 %py3_install
 cp %{buildroot}/%{_bindir}/ytdl %{buildroot}/%{_bindir}/ytdl-3
 ln -sf %{_bindir}/ytdl-3 %{buildroot}/%{_bindir}/ytdl-%{python3_version}
 
+PAFY_BACKEND=internal %py2_install
+cp %{buildroot}/%{_bindir}/ytdl %{buildroot}/%{_bindir}/ytdl-2
+ln -sf %{_bindir}/ytdl-2 %{buildroot}/%{_bindir}/ytdl-%{python2_version}
 
-%files -n python3-%{pypi_name} 
+
+%files -n python3-%{pypi_name}
 %doc README.rst
 %{_bindir}/ytdl
 %{_bindir}/ytdl-3
@@ -79,7 +85,7 @@ ln -sf %{_bindir}/ytdl-3 %{buildroot}/%{_bindir}/ytdl-%{python3_version}
 %{python3_sitelib}/%{pypi_name}
 %{python3_sitelib}/%{pypi_name}-%{version}-py?.?.egg-info
 
-%files -n python2-%{pypi_name} 
+%files -n python2-%{pypi_name}
 %doc README.rst
 %{_bindir}/ytdl-2
 %{_bindir}/ytdl-%{python2_version}
@@ -87,5 +93,9 @@ ln -sf %{_bindir}/ytdl-3 %{buildroot}/%{_bindir}/ytdl-%{python3_version}
 %{python2_sitelib}/%{pypi_name}-%{version}-py?.?.egg-info
 
 %changelog
-* Fri Jun 24 2016 copr-service - 0.5.1-1
+* Sat Feb 24 2018 Jerzy Drozdz <rpmbuilder@jdsieci.pl> - 0.5.4-1
+- Update to version 0.5.4.
+- For python2 backend switched to 'internal'
+
+* Fri Feb 17 2017 root - 0.5.3.1-1
 - Initial package.
