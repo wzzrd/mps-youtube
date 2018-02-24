@@ -2,8 +2,8 @@
 %global pypi_name mps-youtube
 
 Name:           %{pypi_name}
-Version:        0.2.7.1
-Release:        2%{?dist}
+Version:        0.2.8
+Release:        1%{?dist}
 Summary:        Terminal based YouTube player and downloader
 
 License:        GPLv3
@@ -50,6 +50,9 @@ rm -f $RPM_BUILD_ROOT/usr/{README.rst,CHANGELOG,LICENSE}
 %{python3_sitelib}/mps_youtube/
 
 %changelog
+* Sat Feb 24 2018  Jerzy Drozdz <rpmbuilder@jdsieci.pl> - 0.2.8-1
+- update to version 0.2.8
+
 * Thu Jan 25 2018  Jerzy Drozdz <rpmbuilder@jdsieci.pl> - 0.2.7.1-2
 - Fixed missing youtube-dl dependency
 
