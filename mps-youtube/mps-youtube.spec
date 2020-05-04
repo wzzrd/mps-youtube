@@ -3,14 +3,14 @@
 
 Name:           %{pypi_name}
 Version:        0.2.8
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Terminal based YouTube player and downloader
 
 License:        GPLv3
 URL:            http://github.com/np1/mps-youtube
 
 Source0:        https://github.com/mps-youtube/mps-youtube/archive/v%{version}/%{name}-%{version}.tar.gz
-
+Patch0:         https://raw.githubusercontent.com/wzzrd/mps-youtube/master/mps-youtube/mpv032.patch
 
 BuildArch:      noarch
  
@@ -27,7 +27,7 @@ The pafy library handles interfacing with YouTube.
 %setup -q -n %{pypi_name}-%{version}
 # Remove bundled egg-info
 rm -rf %{pypi_name}.egg-info
-
+%patch
 
 %build
 %{__python3} setup.py build
@@ -48,6 +48,9 @@ rm -f $RPM_BUILD_ROOT/usr/{README.rst,CHANGELOG,LICENSE}
 %{python3_sitelib}/mps_youtube/
 
 %changelog
+* Mon May 4 2020 Maxim Burgerhout <maxim@wzzrd.com> - 0.28-1
+- Apply patch from unstable branc to fix mpv-0.32 issue (PR #1053)
+
 * Sat Feb 24 2018  Jerzy Drozdz <rpmbuilder@jdsieci.pl> - 0.2.8-1
 - update to version 0.2.8
 - Removed youtube-dl dependency, python3-pafy requires youtube-dl
